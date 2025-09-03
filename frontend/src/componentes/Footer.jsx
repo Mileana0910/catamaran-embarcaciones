@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import logoSena from '../assets/images/logo-sena.jpg';
 import logoManta from '../assets/images/logo-manta.jpg';
 import logoAlianza from '../assets/images/logo-alianza.jpg';
@@ -12,162 +12,107 @@ export default function Footer() {
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-400/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="relative container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Información de la empresa */}
-          <div className="space-y-6 lg:col-span-2">
+          <div className="flex flex-col justify-center">
             <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <img
-                  src={logoManta}
-                  alt="Logo MANTA"
-                  className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity"
-                  width={80}
-                  height={80}
-                />
-                <div>
-                  <span className="text-sm text-slate-300 font-medium">MANTA</span>
-                  <p className="text-xs text-slate-400 -mt-1">Embarcaciones Fluviales</p>
+              <div className="flex flex-col items-start space-y-4">
+                {/* Logo MANTA - Tamaño original */}
+                <div className="flex items-center bg-white/5 p-3 rounded-lg w-full">
+                  <div className="flex justify-center flex-shrink-0" style={{ width: '60px' }}>
+                    <img
+                      src={logoManta}
+                      alt="Logo MANTA"
+                      className="h-10 w-auto object-contain"
+                    />
+                  </div>
+                  <div className="ml-4 min-w-0 flex-1">
+                    <h3 className="text-sm font-medium">Manta Fluvial</h3>
+                    <p className="text-xs text-slate-400">Embarcaciones Fluviales</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-4 pl-2">
-                <img
-                  src={logoAlianza}
-                  alt="Logo Alianza"
-                  className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity"
-                  width={130}
-                  height={35}
-                />
-                <div>
-                  <p className="text-xs text-slate-400">Desarrollado por</p>
-                  <p className="text-sm text-slate-300 font-medium">Alianza Carrocera de Boyacá S.A.S.</p>
+                
+                {/* Logo Alianza - Tamaño original */}
+                <div className="flex items-center bg-white/5 p-3 rounded-lg w-full">
+                  <div className="flex justify-center flex-shrink-0" style={{ width: '60px' }}>
+                    <img
+                      src={logoAlianza}
+                      alt="Logo Alianza"
+                      className="h-10 w-auto object-contain"
+                    />
+                  </div>
+                  <div className="ml-4 min-w-0 flex-1">
+                    <p className="text-xs text-slate-400">Desarrollado por</p>
+                    <p className="text-sm font-medium">Alianza Carrocera de Boyacá S.A.S.</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              Plataforma digital para la gestión integral de embarcaciones MANTA. Más de 15 años de experiencia en la
-              industria naval colombiana, combinando innovación tecnológica con tradición artesanal.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-lg">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-lg">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-lg">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-lg">
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
-          {/* Navegación */}
-          <div>
-            <h3 className="font-semibold text-lg mb-6 text-white">Navegación</h3>
+          {/* Contacto - Movido a la derecha */}
+          <div className="flex flex-col justify-center md:ml-4 lg:ml-8">
+            <h3 className="font-semibold text-lg mb-4">Contacto</h3>
             <ul className="space-y-4 text-sm">
-              <li>
-                <a href="/" className="text-slate-300 hover:text-white transition-colors">
-                  Inicio
-                </a>
-              </li>
-              <li>
-                <a href="/embarcaciones" className="text-slate-300 hover:text-white transition-colors">
-                  Embarcaciones
-                </a>
-              </li>
-              <li>
-                <a href="/historia" className="text-slate-300 hover:text-white transition-colors">
-                  Historia
-                </a>
-              </li>
-              <li>
-                <a href="/linea-eco" className="text-slate-300 hover:text-white transition-colors">
-                  Línea ECO
-                </a>
-              </li>
-              <li>
-                <a href="/contacto" className="text-slate-300 hover:text-white transition-colors">
-                  Contacto
-                </a>
-              </li>
-              <li>
-                <a href="/login" className="text-slate-300 hover:text-white transition-colors">
-                  Iniciar Sesión
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contacto */}
-          <div>
-            <h3 className="font-semibold text-lg mb-6 text-white">Contacto</h3>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-center space-x-3 text-slate-300">
-                <div className="p-2 bg-slate-800 rounded-lg">
+              <li className="flex items-start space-x-3 text-slate-300">
+                <div className="p-2 bg-slate-800 rounded-lg mt-1 flex-shrink-0">
                   <Phone className="h-4 w-4 text-blue-400" />
                 </div>
-                <div>
-                  <p className="font-medium text-white">+57 (8) 123-4567</p>
+                <div className="min-w-0">
+                  <p className="font-medium text-white">313 872 1284</p>
                   <p className="text-xs text-slate-400">Línea directa</p>
                 </div>
               </li>
-              <li className="flex items-center space-x-3 text-slate-300">
-                <div className="p-2 bg-slate-800 rounded-lg">
+              <li className="flex items-start space-x-3 text-slate-300">
+                <div className="p-2 bg-slate-800 rounded-lg mt-1 flex-shrink-0">
                   <Mail className="h-4 w-4 text-blue-400" />
                 </div>
-                <div>
-                  <p className="font-medium text-white">info@alianzacarrocera.com</p>
+                <div className="min-w-0">
+                  <p className="font-medium text-white">alianzacarroceradeboyaca@hotmail.com</p>
                   <p className="text-xs text-slate-400">Respuesta en 24h</p>
                 </div>
               </li>
-              <li className="flex items-center space-x-3 text-slate-300">
-                <div className="p-2 bg-slate-800 rounded-lg">
+              <li className="flex items-start space-x-3 text-slate-300">
+                <div className="p-2 bg-slate-800 rounded-lg mt-1 flex-shrink-0">
                   <MapPin className="h-4 w-4 text-blue-400" />
                 </div>
-                <div>
-                  <p className="font-medium text-white">Boyacá, Colombia</p>
-                  <p className="text-xs text-slate-400">Planta principal</p>
+                <div className="min-w-0">
+                  <p className="font-medium text-white">Calle 16 # 14-41 Of 805</p>
+                  <p className="text-xs text-slate-400">Duitama-Boyacá, Centro Empresarial Palma Real</p>
                 </div>
               </li>
             </ul>
           </div>
-        </div>
 
-        {/* Colaboradores */}
-        <div className="border-t border-slate-800 mt-12 pt-8">
-          <div className="text-center mb-6">
-            <h4 className="text-slate-400 text-sm font-medium mb-4">En colaboración con:</h4>
-            <div className="flex justify-center items-center">
-              <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
+          {/* Colaboradores - Versión más compacta */}
+          <div className="flex flex-col justify-center">
+            <h3 className="font-semibold text-lg mb-3">Colaboradores</h3>
+            <div className="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+              <div className="flex flex-col items-center space-y-1">
                 <img
                   src={logoSena}
                   alt="Logo SENA"
-                  className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity"
-                  width={80}
-                  height={40}
+                  className="h-8 w-auto"
                 />
+                <div className="text-center">
+                  <p className="text-xs font-medium">Servicio Nacional de Aprendizaje</p>
+                  <p className="text-xs text-slate-400 mt-1">Sistema TECNOPARQUE</p>
+                </div>
               </div>
             </div>
-            <p className="text-xs text-slate-400 mt-2">Servicio Nacional de Aprendizaje</p>
-            <p className="text-xs text-slate-400 mt-2">
-              Proyecto desarrollado con el apoyo del SENA - Sistema de Investigación, Desarrollo Tecnológico e
-              Innovación SENNOVA
-            </p>
           </div>
         </div>
 
         {/* Sección inferior */}
-        <div className="border-t border-slate-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-slate-800 mt-8 pt-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <div className="text-center md:text-left">
               <p className="text-slate-400 text-sm">
-                &copy; 2024 MANTA - Alianza Carrocera de Boyacá S.A.S. Todos los derechos reservados.
+                &copy; 2024 MANTA - Alianza Carrocera de Boyacá S.A.S.
               </p>
             </div>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-4 text-xs">
               <a href="#" className="text-slate-400 hover:text-white transition-colors">
                 Política de Privacidad
               </a>

@@ -2,6 +2,7 @@ import Button from "./ui/Button";
 import SectionTitle from "./ui/SectionTitle";
 import Card from "./ui/Card";
 import lineaEco from '../assets/images/lineaEco.jpg';
+import { Link } from "react-router-dom";
 
 export default function EcoSection() {
   return (
@@ -14,15 +15,17 @@ export default function EcoSection() {
           Nueva Línea <span className="text-green-600">ECO</span>
         </SectionTitle>
         <p className="mb-6 text-gray-700">
-          Presentamos nuestras embarcaciones con energía renovable: paneles solares integrados, motores híbridos y sistemas de autogeneración para una navegación 100% sostenible.
+          Presentamos nuestras embarcaciones con energía renovable: paneles solares aerogeneradores, sistemas de autogeneración para una navegación 100% sostenible.
         </p>
         <ul className="mb-6 space-y-2">
           <li className="flex items-center gap-2"><span>🔋</span> Paneles Solares - Energía limpia</li>
           <li className="flex items-center gap-2"><span>🌱</span> Cero Emisiones - Eco-friendly</li>
-          <li className="flex items-center gap-2"><span>⚡</span> Autogeneradores - Autonomía extendida</li>
+          <li className="flex items-center gap-2"><span>⚡</span> Aerogeneradores - Autonomía extendida</li>
           <li className="flex items-center gap-2"><span>♻️</span> Materiales - Reciclables</li>
         </ul>
-        <Button variant="primary">Conocer Línea ECO</Button>
+        <Link to="/linea-eco">
+          <Button variant="primary">Conocer Línea ECO</Button>
+        </Link>
       </div>
       <div className="max-w-md w-full">
         <Card>

@@ -5,26 +5,26 @@ const CardInfo = () => {
     {
       icon: <Phone className="w-6 h-6 text-blue-500" />,
       title: "Teléfono",
-      content: "+57 (8) 123-4567",
+      content: "+57 313 872 1284\n\n",
       subContent: "Línea directa de ventas",
     },
     {
       icon: <Mail className="w-6 h-6 text-blue-500" />,
       title: "Email",
-      content: "ventas@alianzacarrocera.com",
+      content: "alianzacarroceradeboyaca@hotmail.com",
       subContent: "Respuesta en 24 horas",
     },
     {
       icon: <MapPin className="w-6 h-6 text-blue-500" />,
       title: "Ubicación",
-      content: "Boyacá, Colombia",
-      subContent: "Planta de producción principal",
+      content: "Duitama-Boyacá, Colombia",
+      subContent: "Calle 16 # 14-41 Of 805, Centro Empresarial Palma Real",
     },
     {
       icon: <Clock className="w-6 h-6 text-blue-500" />,
       title: "Horarios",
-      content: "Lun - Vie: 8:00 AM - 6:00 PM\nSábados: 8:00 AM - 2:00 PM",
-      subContent: "Domingos: Cerrado",
+      content: "Lun - Vie: 8:00 AM - 12:00 PM\n& 2:00 PM - 5:00 PM",
+      subContent: "Sabados y Domingos: Cerrado",
     },
   ];
 

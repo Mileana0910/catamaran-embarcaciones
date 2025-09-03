@@ -27,13 +27,25 @@ export default function HeroSection() {
 
       {/* Botones */}
       <div className="flex justify-center gap-4 mb-12">
-        <Button variant="primary" className="px-6 py-3 text-lg rounded-full border border-white/50 hover:scale-105 transition-transform">
-          Ver Catálogo →
-        </Button>
-        <Button variant="secondary" className="px-6 py-3 text-lg rounded-full border border-white/50 hover:scale-105 transition-transform">
-          Contactar
-        </Button>
+        <a href="/embarcaciones">
+          <Button 
+            variant="primary" 
+            className="px-6 py-3 text-lg rounded-full border border-white/50 hover:scale-105 transition-transform"
+          >
+            Ver Catálogo →
+          </Button>
+        </a>
+
+        <a href="/contacto">
+          <Button 
+            variant="secondary" 
+            className="px-6 py-3 text-lg rounded-full border border-white/50 hover:scale-105 transition-transform"
+          >
+            Contactar
+          </Button>
+        </a>
       </div>
+
 
       {/* Métricas */}
       <div className="flex justify-center gap-8 mt-8 flex-wrap">

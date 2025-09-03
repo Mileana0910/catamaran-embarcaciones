@@ -21,7 +21,7 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section className="py-12 px-4 bg-white">
+    <section className="py-12 px-4 bg-blue-100">
       <SectionTitle>Nuestros Servicios</SectionTitle>
       <p className="text-center text-gray-600 mb-8">
         Servicios integrales para propietarios de embarcaciones

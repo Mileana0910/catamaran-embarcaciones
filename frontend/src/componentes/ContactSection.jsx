@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 import SectionTitle from "./ui/SectionTitle";
 
@@ -9,8 +10,11 @@ export default function ContactSection() {
         Únete a nuestra comunidad de propietarios y descubre la experiencia Manta
       </p>
       <div className="flex justify-center gap-4">
-        <Button variant="secondary">Explorar Catálogo</Button>
-        <Button variant="secondary">Contactar Asesor</Button>
+        <Link to="/embarcaciones">
+          <Button variant="secondary">
+            Explorar Catálogo
+          </Button>
+        </Link>
       </div>
     </section>
   );

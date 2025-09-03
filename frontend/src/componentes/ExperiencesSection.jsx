@@ -1,13 +1,13 @@
 import Card from "./ui/Card";
 import SectionTitle from "./ui/SectionTitle";
-
+import Experiencia from "../assets/images/Experiencia.jpg";
 const experiences = [
   {
     name: "Carlos Rodríguez",
     type: "Manta Family",
     time: "3h",
     location: "Lago Calima",
-    image: "/images/experience1.jpg",
+    image: Experiencia,
     likes: 156,
     comments: 32,
     description: "Familia reunida en nuestra Manta Family 🧑‍🤝‍🧑⛵",
@@ -17,7 +17,7 @@ const experiences = [
     type: "Manta Explorer 2024",
     time: "6h",
     location: "Cartagena",
-    image: "/images/experience2.jpg",
+    image: Experiencia,
     likes: 298,
     comments: 67,
     description: "Relajación total con vista al paraíso 🌴🌞",
@@ -27,7 +27,7 @@ const experiences = [
     type: "Manta Fishing Pro",
     time: "8h",
     location: "Santa Marta",
-    image: "/images/experience3.jpg",
+    image: Experiencia,
     likes: 174,
     comments: 28,
     description: "Aventuras familiares que nunca olvidaremos 🚤⛵",
