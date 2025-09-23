@@ -3,8 +3,44 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #1766ff;
-  --color-secondary: #ffffff;
-  --color-accent: #0044cc;
-  --color-bg: #f6f8fa;
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  --color-secondary: #6366f1;
+  --color-accent: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-border: #e2e8f0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+/* En tu archivo index.css o App.css */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
