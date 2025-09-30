@@ -27,9 +27,8 @@ export default function PublicHeader() {
       </div>
       <nav className="hidden md:flex gap-8 font-medium text-gray-700">
         <Link to="/" className="hover:underline">Inicio</Link>
-        {/* Quitamos Embarcaciones */}
-        <Link to="/historia" className="hover:underline">Historia</Link>
         <Link to="/linea-eco" className="hover:underline">Línea ECO</Link>
+        <Link to="/historia" className="hover:underline">Historia</Link>
         <Link to="/contacto" className="hover:underline">Contacto</Link>
       </nav>
       <a
@@ -49,9 +48,8 @@ export default function PublicHeader() {
       {isOpen && (
         <nav className="absolute top-16 left-0 w-full bg-white flex flex-col items-center gap-4 py-4 md:hidden z-50 shadow">
           <Link to="/" className="hover:underline" onClick={() => setIsOpen(false)}>Inicio</Link>
-          {/* Quitamos Embarcaciones */}
-          <Link to="/historia" className="hover:underline" onClick={() => setIsOpen(false)}>Historia</Link>
           <Link to="/linea-eco" className="hover:underline" onClick={() => setIsOpen(false)}>Línea ECO</Link>
+          <Link to="/historia" className="hover:underline" onClick={() => setIsOpen(false)}>Historia</Link>
           <Link to="/contacto" className="hover:underline" onClick={() => setIsOpen(false)}>Contacto</Link>
           <a
             href="/login"

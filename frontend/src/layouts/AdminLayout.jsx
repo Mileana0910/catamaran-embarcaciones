@@ -1,311 +1,344 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import LogoManta from "../assets/images/logo-manta.jpg";
-import LogoAlianza from "../assets/images/logo-alianza.jpg";
+// src/layouts/AdminLayout.jsx
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { 
-  Menu, 
-  X, 
-  Anchor, 
   Users, 
   Package, 
-  BarChart3, 
-  Settings, 
+  FileText, 
+  LogOut, 
+  Menu, 
+  Home, 
   Wrench,
-  FileText,
-  LogOut,
-  ChevronDown,
-  Bell,
-  Search
+  X,
+  ChevronRight
 } from "lucide-react";
+import LogoManta from "../assets/images/logo-manta.jpg"; 
+import LogoAlianza from "../assets/images/logo-alianza.jpg";
 
-export default function AdminLayout({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [notifications] = useState(3);
-  const location = useLocation();
-  const navigate = useNavigate();
+// Constantes para evitar magic strings
+const STORAGE_KEYS = {
+  USER_TYPE: "userType",
+  USER_EMAIL: "userEmail"
+};
 
-  const menuItems = [
-    { path: "/admin/dashboard", label: "Dashboard", icon: BarChart3 },
-    { path: "/admin/inventario", label: "Inventario", icon: Package },
-    { path: "/admin/propietarios", label: "Propietarios", icon: Users },
-    { path: "/admin/mantenimiento", label: "Mantenimiento", icon: Wrench },
-    { path: "/admin/reportes", label: "Reportes", icon: FileText },
-    { path: "/admin/configuracion", label: "Configuración", icon: Settings },
-  ];
+const PATHS = {
+  LOGIN: "/login",
+  DASHBOARD: "/admin/dashboard"
+};
 
-  useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-    if (email) {
-      setUserEmail(email);
-    }
+const navigation = [
+  { name: "Dashboard", href: "/admin/dashboard", icon: Home },
+  { name: "Inventario", href: "/admin/inventario", icon: Package },
+  { name: "Propietarios", href: "/admin/propietarios", icon: Users },
+  { name: "Mantenimiento", href: "/admin/mantenimiento", icon: Wrench },
+  { name: "Reportes", href: "/admin/reportes", icon: FileText },
+];
 
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("userType");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("authToken");
-    navigate("/login");
-  };
-
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
-
-  const getPageTitle = () => {
-    const currentItem = menuItems.find(item => item.path === location.pathname);
-    return currentItem ? currentItem.label : "Dashboard";
+// Componente reutilizable para items de navegación
+const NavItem = ({ item, isActive, onNavigate, onCloseMobileMenu }) => {
+  const IconComponent = item.icon;
+  
+  const handleClick = () => {
+    onNavigate(item.href);
+    onCloseMobileMenu?.();
   };
 
   return (
-    <div className="flex h-screen bg-slate-50">
-      {/* Sidebar para desktop */}
-      <div className="hidden md:flex md:w-72 md:flex-col">
-        <div className="flex flex-col flex-grow pt-6 overflow-y-auto bg-white border-r border-slate-200 shadow-sm">
-          {/* Logo y marca */}
-          <div className="flex items-center justify-center px-6 mb-8">
-            <div className="flex items-center space-x-3">
-              <img className="h-11 w-12 rounded-lg object-cover shadow-md" src={LogoManta} alt="Logo Manta" />
-              <img className="h-12 w-30 rounded-lg object-cover shadow-md" src={LogoAlianza} alt="Logo Alianza" />
-            </div>
-          </div>
-          
-          {/* Información del usuario */}
-          {userEmail && (
-            <div className="px-6 py-4 mb-4 bg-blue-50 mx-4 rounded-xl border border-blue-100">
-              <p className="text-xs font-medium text-slate-600 mb-1">Bienvenido</p>
-              <p className="text-sm font-semibold text-slate-800 truncate">{userEmail}</p>
-              <div className="w-full bg-blue-200 h-1 rounded-full mt-2">
-                <div className="bg-blue-500 h-1 rounded-full w-3/4"></div>
-              </div>
-            </div>
-          )}
-          
-          {/* Navegación */}
-          <nav className="flex-1 px-4 pb-6 space-y-1">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${
-                    isActive(item.path)
-                      ? "bg-blue-50 text-blue-700 border border-blue-100 shadow-sm"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  }`}
-                >
-                  <Icon className="h-5 w-5 mr-3 transition-transform group-hover:scale-110" />
-                  {item.label}
-                  {isActive(item.path) && (
-                    <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-          
-          {/* Footer del sidebar */}
-          <div className="p-4 border-t border-slate-200 mt-auto">
-            <div className="flex items-center justify-between mb-4">
-              <div className="relative">
-                <button 
-                  className="p-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors relative"
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                >
-                  <Bell className="h-4 w-4" />
-                  {notifications > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {notifications}
-                    </span>
-                  )}
-                </button>
-                
-                {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 z-10">
-                    <div className="p-3 border-b border-slate-200">
-                      <p className="text-sm font-medium text-slate-800">{userEmail}</p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Cerrar Sesión
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            <button
-              onClick={handleLogout}
-              className="flex items-center justify-center w-full px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Cerrar Sesión
-            </button>
+    <li>
+      <button
+        onClick={handleClick}
+        className={`w-full flex items-center gap-x-3 rounded-xl p-3 text-sm font-medium transition-all duration-200 group relative overflow-hidden ${
+          isActive
+            ? "bg-blue-50 text-blue-700 border-l-4 border-l-blue-600 shadow-md shadow-blue-100"
+            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-l-4 border-l-transparent hover:border-l-slate-200"
+        }`}
+        aria-current={isActive ? "page" : undefined}
+      >
+        {/* Efecto de fondo sutil para activo */}
+        {isActive && (
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent"></div>
+        )}
+        <IconComponent className={`h-5 w-5 relative z-10 ${isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"}`} />
+        <span className="flex-1 text-left relative z-10">{item.name}</span>
+        <ChevronRight className={`h-4 w-4 transition-transform relative z-10 ${isActive ? "text-blue-500" : "text-slate-300 group-hover:text-slate-400"} ${isActive ? "rotate-90" : ""}`} />
+      </button>
+    </li>
+  );
+};
+
+// Componente para el avatar del usuario
+const UserAvatar = ({ email, className = "" }) => (
+  <div className={`rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md ${className}`}>
+    <span className="text-white font-semibold">
+      {email?.charAt(0).toUpperCase() || "U"}
+    </span>
+  </div>
+);
+
+// Componente para la sección del usuario
+const UserSection = ({ email, onLogout, isMobile = false }) => (
+  <div className={`${isMobile ? 'mt-4' : 'mt-auto pt-6'}`}>
+    {/* Línea separadora con gradiente */}
+    <div className={`${isMobile ? 'mb-4' : 'mb-6'} relative`}>
+      <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+    </div>
+    
+    <div className="flex items-center gap-x-3 p-3 rounded-xl bg-white shadow-sm border border-slate-100 mb-3">
+      <UserAvatar 
+        email={email} 
+        className={isMobile ? "h-9 w-9" : "h-10 w-10"} 
+      />
+      <div className="flex-1 min-w-0">
+        <p className="text-xs text-slate-500 font-medium">Administrador</p>
+        <p className="text-sm font-semibold text-slate-800 truncate" title={email}>
+          {email}
+        </p>
+      </div>
+    </div>
+    
+    {/* Botón de cerrar sesión mejorado */}
+    <button
+      onClick={onLogout}
+      className="w-full flex items-center gap-x-2 p-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200 group border border-transparent hover:border-red-100 hover:shadow-sm"
+    >
+      <div className="p-1.5 rounded-lg bg-red-50 group-hover:bg-red-100 transition-colors shadow-sm">
+        <LogOut className="h-4 w-4 text-red-500" />
+      </div>
+      <span className="flex-1 text-left">Cerrar Sesión</span>
+      <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-red-300 transition-colors" />
+    </button>
+  </div>
+);
+
+const LogoSectionFusion = ({ onNavigate }) => (
+  <div className="flex flex-col gap-6">
+    {/* Contenedor de fusión completa */}
+    <div 
+      className="relative bg-gradient-to-br from-slate-50 to-white rounded-2xl shadow-lg p-6 cursor-pointer group hover:shadow-xl transition-all duration-300 border border-slate-100"
+      onClick={() => onNavigate(PATHS.DASHBOARD)}
+    >
+      {/* Línea de conexión entre logos */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
+        <div className="h-0.5 bg-gradient-to-r from-transparent via-blue-300 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+      </div>
+      
+      <div className="relative flex items-center justify-between">
+        {/* Logo Manta */}
+        <div className="transform transition-transform duration-300 group-hover:scale-110 group-hover:-translate-x-2">
+          <img 
+            src={LogoManta} 
+            alt="Manta" 
+            className="h-16 object-contain max-w-[130px]"
+          />
+        </div>
+        
+        {/* Símbolo de unión en el centro */}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shadow-inner">
+            <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
           </div>
         </div>
+        
+        {/* Logo Alianza */}
+        <div className="transform transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-2">
+          <img 
+            src={LogoAlianza} 
+            alt="Alianza" 
+            className="h-16 object-contain max-w-[130px]"
+          />
+        </div>
       </div>
+    </div>
 
-      {/* Contenido principal */}
-      <div className="flex flex-col flex-1 overflow-hidden">
-        {/* Header móvil/desktop */}
-        <header className={`bg-white shadow-sm transition-all duration-300 ${
-          isScrolled ? 'shadow-lg' : 'shadow-md'
-        }`}>
-          <div className="flex items-center justify-between px-4 py-3 md:px-6">
-            <div className="flex items-center">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="text-slate-600 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100 transition-colors md:hidden"
-              >
-                {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-              
-              <div className="ml-4">
-                <h1 className="text-xl font-semibold text-slate-900">
-                  {getPageTitle()}
-                </h1>
-                <p className="text-sm text-slate-600">
-                  Panel de administración CATAMARÁN
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              {/* Barra de búsqueda */}
-              <div className="flex-1 max-w-lg mx-4 hidden md:block">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-                  <input
-                    type="text"
-                    placeholder="Buscar embarcaciones, propietarios..."
-                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        console.log('Buscar:', e.target.value);
-                      }
-                    }}
-                  />
+    {/* Título centrado */}
+    <div className="text-center">
+      <p className="text-sm font-semibold text-slate-700 tracking-wide bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent">
+        PLATAFORMA ADMINISTRATIVA
+      </p>
+    </div>
+  </div>
+);
+
+// Componente para los logos en móvil (versión unida)
+const MobileLogos = () => (
+  <div className="bg-white rounded-xl shadow-md p-4 mx-4 my-3 border border-slate-100">
+    <div className="flex items-center justify-center gap-4">
+      <img 
+        src={LogoManta} 
+        alt="Manta" 
+        className="h-14 object-contain max-w-[100px]"
+      />
+      <div className="h-8 w-px bg-gradient-to-b from-slate-200 to-slate-300"></div>
+      <img 
+        src={LogoAlianza} 
+        alt="Alianza" 
+        className="h-14 object-contain max-w-[100px]"
+      />
+    </div>
+    <div className="text-center mt-2">
+      <span className="text-xs text-slate-500 font-medium">ALIANZA ESTRATÉGICA</span>
+    </div>
+  </div>
+);
+
+export default function AdminLayout({ children }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [userEmail, setUserEmail] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem(STORAGE_KEYS.USER_TYPE);
+    localStorage.removeItem(STORAGE_KEYS.USER_EMAIL);
+    navigate(PATHS.LOGIN);
+  }, [navigate]);
+
+  const handleNavigate = useCallback((path) => {
+    navigate(path);
+  }, [navigate]);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  const isActive = useCallback((href) => location.pathname === href, [location.pathname]);
+
+  useEffect(() => {
+    const email = localStorage.getItem(STORAGE_KEYS.USER_EMAIL);
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
+  const navItems = useMemo(() => navigation.map(item => ({
+    ...item,
+    isActive: isActive(item.href)
+  })), [isActive]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-25 via-white to-slate-50">
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-80 lg:flex-col">
+        <div className="flex grow flex-col gap-y-8 overflow-y-auto bg-white border-r border-slate-200 px-6 py-8 shadow-lg">
+          <LogoSectionFusion onNavigate={handleNavigate} />
+          {/* Navigation */}
+          <nav className="flex flex-1 flex-col">
+            <ul className="space-y-2">
+              {navItems.map((item) => (
+                <NavItem
+                  key={item.name}
+                  item={item}
+                  isActive={item.isActive}
+                  onNavigate={handleNavigate}
+                />
+              ))}
+            </ul>
+
+            {/* User Section */}
+            <UserSection 
+              email={userEmail} 
+              onLogout={handleLogout} 
+            />
+          </nav>
+        </div>
+      </aside>
+
+      {/* Mobile Header */}
+      <header className="sticky top-0 z-40 flex items-center gap-x-4 bg-white/95 backdrop-blur-sm px-4 py-3 shadow-md border-b border-slate-200 lg:hidden">
+        <button
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="p-2 rounded-lg hover:bg-slate-100 transition-colors shadow-sm"
+          aria-label="Abrir menú"
+        >
+          <Menu className="h-5 w-5 text-slate-700" />
+        </button>
+        
+        <div className="flex-1 text-center">
+          <span className="font-semibold text-slate-800">CATAMARÁN</span>
+          <p className="text-xs text-slate-500">Panel Administrativo</p>
+        </div>
+        
+        <UserAvatar email={userEmail} className="h-8 w-8 shadow-md" />
+      </header>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div 
+            className="fixed inset-0 bg-black/25 backdrop-blur-sm"
+            onClick={closeMobileMenu}
+            aria-hidden="true"
+          />
+          <div className="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl">
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-white">
+                <div className="text-center flex-1">
+                  <h2 className="font-bold text-lg text-slate-800">CATAMARÁN</h2>
+                  <p className="text-xs text-slate-600 font-medium">
+                    Panel Administrativo
+                  </p>
                 </div>
-              </div>
-              
-              {/* Notificaciones */}
-              <button className="p-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors relative">
-                <Bell className="h-5 w-5" />
-                {notifications > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {notifications}
-                  </span>
-                )}
-              </button>
-              
-              {/* Perfil de usuario */}
-              <div className="relative">
-                <button 
-                  className="flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 transition-colors"
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                <button
+                  onClick={closeMobileMenu}
+                  className="p-2 rounded-lg hover:bg-slate-100 transition-colors shadow-sm"
+                  aria-label="Cerrar menú"
                 >
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                    {userEmail ? userEmail.charAt(0).toUpperCase() : "U"}
-                  </div>
-                  <ChevronDown className="h-4 w-4 text-slate-500" />
+                  <X className="h-5 w-5 text-slate-600" />
                 </button>
-                
-                {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 z-10">
-                    <div className="p-3 border-b border-slate-200">
-                      <p className="text-sm font-medium text-slate-800">{userEmail}</p>
-                      <p className="text-xs text-slate-600">Administrador</p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Cerrar Sesión
-                    </button>
-                  </div>
-                )}
+              </div>
+
+              {/* Logos en versión móvil unidos */}
+              <MobileLogos />
+
+              {/* Navigation */}
+              <nav className="flex-1 p-4 overflow-y-auto bg-slate-25">
+                <ul className="space-y-2">
+                  {navItems.map((item) => (
+                    <NavItem
+                      key={item.name}
+                      item={item}
+                      isActive={item.isActive}
+                      onNavigate={handleNavigate}
+                      onCloseMobileMenu={closeMobileMenu}
+                    />
+                  ))}
+                </ul>
+              </nav>
+
+              {/* User Section */}
+              <div className="p-4 border-t border-slate-200 bg-white">
+                <UserSection 
+                  email={userEmail} 
+                  onLogout={handleLogout}
+                  isMobile={true}
+                />
               </div>
             </div>
           </div>
-        </header>
+        </div>
+      )}
 
-        {/* Sidebar móvil */}
-        {sidebarOpen && (
-          <div className="md:hidden fixed inset-0 z-50">
-            <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)}></div>
-            <div className="fixed inset-y-0 left-0 w-80 bg-white shadow-lg transform transition-transform duration-300">
-              <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between p-4 border-b border-slate-200">
-                  <div className="flex items-center space-x-3">
-                    <img className="h-10 w-10 rounded-lg" src={LogoManta} alt="Logo Manta" />
-                    <img className="h-10 w-10 rounded-lg" src={LogoAlianza} alt="Logo Alianza" />
-                  </div>
-                  <button
-                    onClick={() => setSidebarOpen(false)}
-                    className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-                
-                <div className="flex-1 overflow-y-auto p-4">
-                  <nav className="space-y-2">
-                    {menuItems.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all ${
-                            isActive(item.path)
-                              ? "bg-blue-50 text-blue-700 border border-blue-100"
-                              : "text-slate-600 hover:bg-slate-50"
-                          }`}
-                          onClick={() => setSidebarOpen(false)}
-                        >
-                          <Icon className="h-5 w-5 mr-3" />
-                          {item.label}
-                        </Link>
-                      );
-                    })}
-                  </nav>
-                </div>
-                
-                <div className="p-4 border-t border-slate-200">
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center justify-center w-full px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Cerrar Sesión
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Contenido de la página */}
-        <main className="flex-1 overflow-auto p-4 md:p-6 bg-slate-50 transition-colors duration-300">
-          <div className="max-w-7xl mx-auto">
+      {/* Main Content */}
+      <main className="lg:pl-80">
+        <div className="p-6 min-h-screen">
+          <div className="bg-white rounded-2xl shadow-md border border-slate-200">
             {children}
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

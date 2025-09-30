@@ -22,7 +22,7 @@ export default function TimelineHistoria() {
       year: "2019-2022",
       title: "DISEÑO EMBARCACIÓN TURÍSTICA",
       icon: Ship,
-      description: "En el año 2019 fue seleccionado nuestro proyecto para la fabricación de una embarcación para el transporte fluvial de pasajeros denominado: 'Diseño de embarcación propulsada mediante energías alternativas'."
+      description: "En el año 2019 fue seleccionado nuestro proyecto para la fabricación de una embarcación para el transporte fluvial de pasajeros denominado: Diseño de embarcación propulsada mediante energías alternativas."
     },
     {
       id: 4,
@@ -84,6 +84,7 @@ export default function TimelineHistoria() {
                     <>
                       <li>• Identificación de nuevas oportunidades de mercado</li>
                       <li>• Desarrollo de estrategias para diversificación</li>
+                      <li>• Culmina con la definición de la estrategia de atender el mercado de transporte fluvial en Colombia de pasajeros.</li>
                     </>
                   )}
                 </ul>
