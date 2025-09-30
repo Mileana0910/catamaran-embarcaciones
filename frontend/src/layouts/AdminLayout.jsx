@@ -31,7 +31,6 @@ const navigation = [
   { name: "Inventario", href: "/admin/inventario", icon: Package },
   { name: "Propietarios", href: "/admin/propietarios", icon: Users },
   { name: "Mantenimiento", href: "/admin/mantenimiento", icon: Wrench },
-  { name: "Reportes", href: "/admin/reportes", icon: FileText },
 ];
 
 // Componente reutilizable para items de navegación

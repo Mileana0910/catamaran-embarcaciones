@@ -13,7 +13,6 @@ import AdminDashboardPage from "./pages/admin/DashboardPage";
 import InventarioPage from "./pages/admin/InventarioPage";
 import MantenimientoPage from "./pages/admin/MantenimientoPage";
 import PropietariosPage from "./pages/admin/PropietariosPage";
-import ReportesPage from "./pages/admin/ReportesPage";
 
 // Importar páginas del propietario
 import OwnerDashboardPage from "./pages/owner/DashboardPage";
@@ -92,11 +91,6 @@ function App() {
         <Route path="/admin/mantenimiento" element={
           <ProtectedAdminRoute>
             <MantenimientoPage />
-          </ProtectedAdminRoute>
-        } />
-        <Route path="/admin/reportes" element={
-          <ProtectedAdminRoute>
-            <ReportesPage />
           </ProtectedAdminRoute>
         } />
         
