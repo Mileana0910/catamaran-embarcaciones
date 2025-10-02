@@ -10,7 +10,7 @@ import logoACB from "../assets/images/logo-alianza.jpg";
 import logoSENA from "../assets/images/logo-sena.jpg";
 import logoUPTC from "../assets/images/Logo-UPTC.jpg";
 import logoTecnoparque from "../assets/images/logo_Tecnoparque.jpg";
-
+import { HistoryModalContent } from "../componentes/historia/HistoryModalContent";
 export default function HeroSection() {
   const [activeModal, setActiveModal] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -20,7 +20,7 @@ export default function HeroSection() {
       id: 1,
       title: "NACIMIENTO Y DESARROLLO ACB",
       year: "2008-2013",
-      logo: logoACB, // Cambiado de logoSENA a logoACB
+      logo: logoACB, 
       gradient: "from-blue-800 to-blue-900",
       content: (
         <div className="space-y-6">
@@ -421,7 +421,7 @@ export default function HeroSection() {
         onClose={closeModal}
         title={getActiveModalData()?.title || ""}
       >
-        {getActiveModalData()?.content}
+        {activeModal && HistoryModalContent[activeModal]}
       </Modal>
     </section>
   );

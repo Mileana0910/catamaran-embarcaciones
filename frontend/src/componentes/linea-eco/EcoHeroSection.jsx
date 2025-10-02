@@ -30,18 +30,19 @@ export default function EcoHeroSection() {
             <span className="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">ECO</span>
           </h1>
           <p className="text-xl text-emerald-100 max-w-3xl mx-auto leading-relaxed mb-8">
-            Revolucionamos la navegación con embarcaciones 100% sostenibles. Energía solar, propulsión eléctrica y
-            tecnología de vanguardia para un futuro más verde en el agua.
+            Revolucionamos la navegación con embarcaciones 100% sostenibles. Energía solar y eólica. 
+            Navegación solar y Propulsión eléctrica. Tecnología de vanguardia para un futuro más verde 
+            en el agua contribuyendo al ODS 7.
           </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 mb-3">
-              <span className="text-2xl">🌿</span>
+              <span className="text-2xl">👥</span>
             </div>
-            <div className="text-2xl font-bold text-white">100%</div>
-            <div className="text-emerald-200 text-sm">Cero Emisiones</div>
+            <div className="text-2xl font-bold text-white">40</div>
+            <div className="text-emerald-200 text-sm">Capacidad</div>
           </div>
           <div className="text-center">
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 mb-3">
@@ -52,17 +53,17 @@ export default function EcoHeroSection() {
           </div>
           <div className="text-center">
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 mb-3">
-              <span className="text-2xl">🔋</span>
+              <span className="text-2xl">💨</span>
             </div>
-            <div className="text-2xl font-bold text-white">20h</div>
-            <div className="text-emerald-200 text-sm">Autonomía</div>
+            <div className="text-2xl font-bold text-white">1.8kW</div>
+            <div className="text-emerald-200 text-sm">Energía Eólica</div>
           </div>
           <div className="text-center">
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 mb-3">
-              <span className="text-2xl">♻️</span>
+              <span className="text-2xl">⚡</span>
             </div>
-            <div className="text-2xl font-bold text-white">85%</div>
-            <div className="text-emerald-200 text-sm">Reciclable</div>
+            <div className="text-2xl font-bold text-white">27km/h</div>
+            <div className="text-emerald-200 text-sm">Vel. Máxima</div>
           </div>
         </div>
       </div>

@@ -1,37 +1,53 @@
-import Card, { CardContent, CardHeader, CardTitle } from "../ui/Card";
-import { Building2, Lightbulb, Ship, Wrench } from "lucide-react";
+import { useState } from "react";
+import { Building2, Lightbulb, Ship, Wrench, Eye } from "lucide-react";
+import Modal from "../ui/Modal";
+import { HistoryModalContent } from "./HistoryModalContent";
 
 export default function TimelineHistoria() {
+  const [activeModal, setActiveModal] = useState(null);
+
   const timelineEvents = [
     {
       id: 1,
       year: "2008-2013",
       title: "NACIMIENTO Y DESARROLLO ACB",
       icon: Building2,
-      description: "En el año 2008 el SENA CIMM llevó a cabo un trabajo de integración del sector carrocero de Duitama con empresas afectadas por las tendencias del mercado y algunas disposiciones sobre la fabricación de buses. Como resultado nació en el año 2011 la empresa ALIANZA CARROCERA DE BOYACA SAS."
+      description: "En el año 2008 el SENA CIMM llevó a cabo un trabajo de integración del sector carrocero de Duitama con empresas afectadas por las tendencias del mercado y algunas disposiciones sobre la fabricación de buses. Como resultado nació en el año 2011 la empresa ALIANZA CARROCERA DE BOYACA SAS.",
+      modalId: 1
     },
     {
       id: 2,
       year: "2016-2018",
       title: "INTELIGENCIA COMPETITIVA",
       icon: Lightbulb,
-      description: "En convenio con la UPTC sede Duitama se llevó a cabo este estudio iniciado en el año 2016 y culminado en el año 2018. Este proyecto de inteligencia competitiva permitió identificar nuevas oportunidades de mercado."
+      description: "En convenio con la UPTC sede Duitama se llevó a cabo este estudio iniciado en el año 2016 y culminado en el año 2018. Este proyecto de inteligencia competitiva permitió identificar nuevas oportunidades de mercado.",
+      modalId: 2
     },
     {
       id: 3,
       year: "2019-2022",
       title: "DISEÑO EMBARCACIÓN TURÍSTICA",
       icon: Ship,
-      description: "En el año 2019 fue seleccionado nuestro proyecto para la fabricación de una embarcación para el transporte fluvial de pasajeros denominado: Diseño de embarcación propulsada mediante energías alternativas."
+      description: "En el año 2019 fue seleccionado nuestro proyecto para la fabricación de una embarcación para el transporte fluvial de pasajeros denominado: Diseño de embarcación propulsada mediante energías alternativas.",
+      modalId: 3
     },
     {
       id: 4,
       year: "2023-Actualidad",
       title: "PUESTA A PUNTO MANTA FLUVIAL",
       icon: Wrench,
-      description: "El año 2023 un equipo integrado por personal profesional del SENA y estudiantes de la UPTC avanzaron en el análisis de costos de fabricación, despiece y matrices para la fabricación de la embarcación."
+      description: "El año 2023 un equipo integrado por personal profesional del SENA y estudiantes de la UPTC avanzaron en el análisis de costos de fabricación, despiece y matrices para la fabricación de la embarcación.",
+      modalId: 4
     }
   ];
+
+  const openModal = (modalId) => setActiveModal(modalId);
+  const closeModal = () => setActiveModal(null);
+
+  const getModalTitle = (modalId) => {
+    const event = timelineEvents.find(event => event.modalId === modalId);
+    return event ? event.title : "";
+  };
 
   return (
     <section className="py-16 bg-white">
@@ -53,13 +69,13 @@ export default function TimelineHistoria() {
           
           <div className="space-y-8">
             {timelineEvents.map((event) => (
-              <div key={event.id} className="bg-gray-50 rounded-lg p-6 border-l-4 border-blue-600">
+              <div key={event.id} className="bg-gray-50 rounded-lg p-6 border-l-4 border-blue-600 hover:shadow-lg transition-shadow duration-300">
                 {/* Encabezado del evento */}
                 <div className="flex items-start gap-4 mb-4">
                   <div className="bg-blue-100 p-3 rounded-lg">
                     <event.icon className="h-6 w-6 text-blue-700" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <span className="inline-block bg-blue-600 text-white text-sm font-medium px-3 py-1 rounded-full mb-2">
                       {event.year}
                     </span>
@@ -68,12 +84,12 @@ export default function TimelineHistoria() {
                 </div>
                 
                 {/* Descripción */}
-                <p className="text-gray-700 leading-relaxed pl-16">
+                <p className="text-gray-700 leading-relaxed pl-16 mb-4">
                   {event.description}
                 </p>
                 
                 {/* Puntos destacados (opcional) */}
-                <ul className="text-gray-600 space-y-1 mt-4 pl-16">
+                <ul className="text-gray-600 space-y-1 mt-4 pl-16 mb-4">
                   {event.id === 1 && (
                     <>
                       <li>• Integración de 10 empresas proveedoras y fabricantes</li>
@@ -88,6 +104,17 @@ export default function TimelineHistoria() {
                     </>
                   )}
                 </ul>
+
+                {/* Botón Ver Más - Alineado a la derecha */}
+                <div className="flex justify-end pl-16">
+                  <button
+                    onClick={() => openModal(event.modalId)}
+                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium"
+                  >
+                    <Eye className="h-4 w-4" />
+                    Ver más detalles
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -102,6 +129,15 @@ export default function TimelineHistoria() {
             compromiso con la innovación y sostenibilidad en el sector fluvial.
           </p>
         </div>
+
+        {/* Modal */}
+        <Modal
+          isOpen={activeModal !== null}
+          onClose={closeModal}
+          title={getModalTitle(activeModal)}
+        >
+          {activeModal && HistoryModalContent[activeModal]}
+        </Modal>
       </div>
     </section>
   );

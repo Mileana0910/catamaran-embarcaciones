@@ -1,57 +1,76 @@
-import { Sun, Wind, Battery, Zap, Droplets, Recycle } from "lucide-react";
-import Card from "../ui/Card";
-import { CardHeader, CardTitle, CardContent } from "../ui/Card";
+import { Sun, Wind, Battery, Zap, Settings, Cpu } from "lucide-react";
 
 const ecoFeatures = [
   {
     icon: Sun,
-    title: "Paneles Solares de Alta Eficiencia",
-    description:
-      "Tecnología fotovoltaica de última generación que convierte la luz solar en energía limpia para propulsión y sistemas auxiliares.",
-    specs: "Hasta 5kW de potencia",
+    title: "Energía Solar",
+    description: "Sistema fotovoltaico de 5 kW para propulsión y sistemas auxiliares.",
+    specs: "5 kW pico",
+    gradient: "from-amber-50 to-orange-50",
+    iconColor: "text-amber-600"
   },
   {
     icon: Wind,
-    title: "Generadores Eólicos Integrados",
-    description:
-      "Turbinas de viento compactas que aprovechan las brisas marinas para generar energía adicional durante la navegación.",
-    specs: "1.5kW adicionales",
+    title: "Generación Eólica",
+    description: "Turbinas integradas que aprovechan brisas marinas para energía adicional.",
+    specs: "1.8 kW complementario",
+    gradient: "from-sky-50 to-blue-50",
+    iconColor: "text-sky-600"
   },
   {
     icon: Battery,
-    title: "Baterías de Ion-Litio",
-    description:
-      "Sistema de almacenamiento de energía de alta capacidad que garantiza autonomía extendida sin emisiones.",
-    specs: "50kWh de capacidad",
+    title: "Almacenamiento",
+    description: "Baterías POWER 48-5000 Litio con 5,275 Wh de capacidad.",
+    specs: "10.5 kWh total",
+    gradient: "from-emerald-50 to-teal-50",
+    iconColor: "text-emerald-600"
   },
   {
     icon: Zap,
-    title: "Propulsión Eléctrica",
-    description:
-      "Motores eléctricos silenciosos y eficientes que eliminan completamente las emisiones durante la navegación.",
-    specs: "100HP equivalente",
-  },
+    title: "Propulsión",
+    description: "Motor TORQEEDO CRUISE 12.0 con potencia equivalente a 12 C.V.",
+    specs: "12 C.V. equivalente",
+    gradient: "from-violet-50 to-purple-50",
+    iconColor: "text-violet-600"
+  }
 ];
 
 export default function EcoTechnologies() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {ecoFeatures.map((feature, index) => (
-        <Card key={index} className="text-center hover:shadow-lg transition-shadow border-0 shadow-md">
-          <CardHeader>
-            <div className="bg-gradient-to-br from-emerald-100 to-teal-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <feature.icon className="h-8 w-8 text-emerald-600" />
+    <div className="max-w-7xl mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {ecoFeatures.map((feature, index) => (
+          <div
+            key={index}
+            className="group relative bg-white rounded-2xl border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+          >
+            {/* Background Gradient */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300`} />
+            
+            <div className="relative z-10 h-full flex flex-col">
+              {/* Icon */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
+                  <feature.icon className={`h-8 w-8 ${feature.iconColor}`} />
+                </div>
+                <span className="text-sm font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600">
+                  {feature.specs}
+                </span>
+              </div>
+
+              {/* Content */}
+              <div className="flex-grow">
+                <h3 className="font-semibold text-gray-900 mb-4 text-xl">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed text-base">
+                  {feature.description}
+                </p>
+              </div>
             </div>
-            <CardTitle className="text-xl">{feature.title}</CardTitle>
-            <span className="text-emerald-600 border-emerald-200 border px-3 py-1 rounded-full text-sm">
-              {feature.specs}
-            </span>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-          </CardContent>
-        </Card>
-      ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

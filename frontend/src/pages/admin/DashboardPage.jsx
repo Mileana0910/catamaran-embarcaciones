@@ -155,25 +155,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Gráfica de Pagos */}
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h3 className="font-semibold text-gray-800 mb-4 text-lg">Pagos por Mes</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={paymentData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-              <XAxis dataKey="month" fontSize={12} />
-              <YAxis fontSize={12} />
-              <Tooltip />
-              <Line 
-                type="monotone" 
-                dataKey="amount" 
-                stroke="#8b5cf6" 
-                strokeWidth={2}
-                dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
         {/* Acciones Rápidas - Con colores originales */}
         <div className="bg-white p-6 rounded-lg border border-gray-200">
           <h3 className="font-semibold text-gray-800 mb-4 text-lg">Acciones Rápidas</h3>
